@@ -9,7 +9,7 @@ const ReadMore = ({body}) => {
   return (
     <>
     <span onClick={() => reading()}>
-        {readMore ? body : body.slice(0, 100)}
+        {readMore ? body : body.slice(0, 100) + "..."}
     </span> 
     </>
   )
