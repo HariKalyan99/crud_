@@ -12,6 +12,8 @@ function App() {
 
 
   const [getNewPosts, setNewPosts] = useState("");
+  const [getEditPosts, setEditPosts] = useState("");
+  const [getEditId, setEditId] = useState("");
 
   useEffect(() => {
     let controller = new AbortController();
@@ -53,22 +55,23 @@ function App() {
 
   }, [getNewPosts])
 
-  // useEffect(() => {
-  //   const putFetchEdit = async(data) => {
-  //     try {
-  //       const {data} = await axios.put('http://localhost:8000/posts', {
-  //         ...data, views: 100,
-  //       })
+  useEffect(() => {
+    const putFetchEdit = async({userId, title, body, reactions ,tags, prevId}) => {
+      try {
+        const {data} = await axios.put(`http://localhost:8000/posts/${prevId}`, {
+          userId, title, body, reactions ,tags, views: 100,
+        })
+        console.log(data)
+      } catch (error) {
+        console.log("Error", error)
+      }
+    }
 
-  //       console.log(data)
-  //     } catch (error) {
-  //       console.log("Error", error)
-  //     }
-  //   }
+    if(getEditPosts.title?.length){
+      putFetchEdit(getEditPosts);
+    }
 
-  //   putFetchEdit();
-
-  // }, [])
+  }, [getEditPosts])
 
   // useEffect(() => {
   //   const delFetchRemove = async(data) => {
@@ -86,6 +89,7 @@ function App() {
   //   delFetchRemove();
 
   // }, [])
+  
   const sideDisplay = (val) => {
     setSide(val);
   };
@@ -109,8 +113,8 @@ function App() {
     console.log(id);
   };
 
-  const editPost = (newPost, prevId) => {
-    console.log(newPost, prevId);
+  const editPost = (editPost) => {
+    setEditPosts(editPost);
   };
 
 

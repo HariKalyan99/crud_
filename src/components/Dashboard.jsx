@@ -4,7 +4,8 @@ import PostCard from './PostCard';
 const Dashboard = ({postList,
   deletePost,
   editPost}) => {
-  
+
+    
 
  
   return (

@@ -471,6 +471,23 @@
       },
       "views": 3558,
       "userId": 177
+    },
+    {
+      "userId": "9",
+      "title": "This is a new title edited",
+      "body": "this is my first body edited",
+      "reactions": {
+        "likes": "80",
+        "dislikes": "14"
+      },
+      "tags": [
+        "error",
+        "free",
+        "add",
+        "edit"
+      ],
+      "views": 100,
+      "id": "9668"
     }
   ]
 }

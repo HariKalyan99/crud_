@@ -1,9 +1,21 @@
-import React from "react";
+import React, { useState } from "react";
 import ReadMore from "./ReadMore";
+import EditPost from "./EditPost";
 
-const PostCard = ({ post, deletePost, editPost }) => {
+const PostCard = ({ post, deletePost, editPost}) => {
+
+  const [showEditPost, setShowEditPost] = useState(false);
+
+
+  const editDisplayFn = async() => {
+    setShowEditPost(!showEditPost);
+  }
+
+  
+
   return (
-    <div className="col position-relative">
+    <div>
+      {showEditPost ? <EditPost editDisplayFn={editDisplayFn} post={post} editPost={editPost}/> : <div className="col position-relative">
       <span class="position-absolute z-3 top-0 start-50 translate-middle badge rounded-pill bg-warning">
         {post.views}
       </span>
@@ -58,11 +70,13 @@ const PostCard = ({ post, deletePost, editPost }) => {
           </svg>
           <span>{post.reactions.dislikes}</span>
           <div className="d-flex justify-content-center">
-          <button className="btn btn-secondary p-1 w-25 m-4">Edit</button>
+          <button className="btn btn-secondary p-1 w-25 m-4" onClick={() => editDisplayFn(!showEditPost)}>Edit</button>
           <button className="btn btn-secondary p-1 w-25 m-4" onClick={() => deletePost(post.id)}>Delete</button>
         </div>
         </div>
       </div>
+    </div>}
+    
     </div>
   );
 };
