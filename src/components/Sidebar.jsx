@@ -1,6 +1,9 @@
-import React from 'react'
+import React, { useContext } from 'react'
+import { blogStore } from '../routes/App'
 
-const Sidebar = ({side, sideDisplay}) => {
+const Sidebar = () => {
+
+  const {side, sideDisplay} = useContext(blogStore);
   return (
     <div class="d-flex flex-column flex-shrink-0 p-3 text-bg-dark" style={{"width": "280px"}}>
     <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">

@@ -1,10 +1,14 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import PostCard from './PostCard';
+import { blogStore } from '../routes/App';
 
-const Dashboard = ({postList,
-  deletePost,
-  editPost}) => {
+const Dashboard = () => {
 
+
+
+  const {postList,
+    deletePost,
+    editPost} = useContext(blogStore)
     
 
  

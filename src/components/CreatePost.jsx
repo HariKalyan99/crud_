@@ -1,7 +1,9 @@
-import React, { useRef } from 'react'
+import React, { useContext, useRef } from 'react'
+import { blogStore } from '../routes/App';
 
-const CreatePost = ({addPost}) => {
+const CreatePost = () => {
 
+  const {addPost} = useContext(blogStore)
 
   const userIdRef = useRef("");
   const titleRef = useRef("");
