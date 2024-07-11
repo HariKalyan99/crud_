@@ -1,6 +1,6 @@
 import React, { useContext, useState } from 'react'
 import PostCard from './PostCard';
-import { blogStore } from '../routes/App';
+import { blogStore } from '../store/Blogstore';
 
 const Dashboard = () => {
 
@@ -8,10 +8,9 @@ const Dashboard = () => {
 
   const {postList,
     deletePost,
-    editPost} = useContext(blogStore)
+    editPost, side} = useContext(blogStore)
     
-
- 
+if(side === "dashboard"){
   return (
     <div className="album py-5 bg-body-tertiary" >
     <div className="container-fluid">
@@ -21,6 +20,7 @@ const Dashboard = () => {
     </div>
   </div>
   )
+}
 }
 
 export default Dashboard

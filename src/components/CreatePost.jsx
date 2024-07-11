@@ -1,9 +1,9 @@
 import React, { useContext, useRef } from 'react'
-import { blogStore } from '../routes/App';
+import { blogStore } from '../store/Blogstore';
 
 const CreatePost = () => {
 
-  const {addPost} = useContext(blogStore)
+  const {addPost, side} = useContext(blogStore)
 
   const userIdRef = useRef("");
   const titleRef = useRef("");
@@ -32,34 +32,36 @@ const tags = tagsRef.current.value.split(",");
 // reactionsRef.current.value = ""
 // tagsRef.current.value = ""
   }
-  return (
-    <form className='d-flex flex-column justify-content-center align-items-center gap-3 w-100 m-5' onSubmit={(e) => handleSubmit(e)}>
-        <label id='userId'>User Id</label>
-        <input type="number" placeholder='type...'className='w-75 p-2' ref={userIdRef}/>
-
-        
-        <label id='title'>Title</label>
-        <input type="text" placeholder='type...'className='w-75 p-2' ref={titleRef}/>
-
-        
-        <label id='body'>Body</label>
-        <textarea type="text"  rows={4} placeholder='type...'className='w-75 p-2' ref={bodyRef}/>
-
-
-        <label id='reactions'>Likes</label>
-        <input type="number" placeholder='type...'className='w-75 p-2' ref={likesRef}/>
-
-        <label id='reactions'>DisLikes</label>
-        <input type="number" placeholder='type...'className='w-75 p-2' ref={disLikesRef}/>
-
-
-        
-        <label id='tags'>Tags</label>
-        <input type="text" placeholder='type...'className='w-75 p-2' ref={tagsRef}/>
-
-        <button type='submit' className='btn btn-success'>Add Post</button>
-    </form>
-  )
+  if(side === "home"){
+    return (
+      <form className='d-flex flex-column justify-content-center align-items-center gap-3 w-100 m-5' onSubmit={(e) => handleSubmit(e)}>
+          <label id='userId'>User Id</label>
+          <input type="number" placeholder='type...'className='w-75 p-2' ref={userIdRef}/>
+  
+          
+          <label id='title'>Title</label>
+          <input type="text" placeholder='type...'className='w-75 p-2' ref={titleRef}/>
+  
+          
+          <label id='body'>Body</label>
+          <textarea type="text"  rows={4} placeholder='type...'className='w-75 p-2' ref={bodyRef}/>
+  
+  
+          <label id='reactions'>Likes</label>
+          <input type="number" placeholder='type...'className='w-75 p-2' ref={likesRef}/>
+  
+          <label id='reactions'>DisLikes</label>
+          <input type="number" placeholder='type...'className='w-75 p-2' ref={disLikesRef}/>
+  
+  
+          
+          <label id='tags'>Tags</label>
+          <input type="text" placeholder='type...'className='w-75 p-2' ref={tagsRef}/>
+  
+          <button type='submit' className='btn btn-success'>Add Post</button>
+      </form>
+    )
+  }
 }
 
 export default CreatePost
