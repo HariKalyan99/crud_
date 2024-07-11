@@ -25,12 +25,11 @@ const tags = tagsRef.current.value.split(",");
       title,
       body,
       tags, likes, dislikes})
-
-//     userIdRef.current.value = ""
-// titleRef.current.value = ""
-// bodyRef.current.value = ""
-// reactionsRef.current.value = ""
-// tagsRef.current.value = ""
+    userIdRef.current.value = ""
+titleRef.current.value = ""
+bodyRef.current.value = ""
+reactionsRef.current.value = ""
+tagsRef.current.value = ""
   }
   if(side === "home"){
     return (

@@ -1,9 +1,8 @@
 import Footer from "../components/Footer";
 import Navbar from "../components/Navbar";
 import Sidebar from "../components/Sidebar";
-import Dashboard from "../components/Dashboard";
-import CreatePost from "../components/CreatePost";
 import BlogstoreProvider from "../store/Blogstore";
+import { Outlet } from "react-router-dom";
 
 function App() {
   return (
@@ -11,8 +10,7 @@ function App() {
       <Navbar />
       <div className="d-flex">
         <Sidebar />
-        <CreatePost />
-        <Dashboard />
+        <Outlet />
       </div>
       <Footer />
     </BlogstoreProvider>

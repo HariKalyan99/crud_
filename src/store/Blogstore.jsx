@@ -1,5 +1,6 @@
 import { createContext, useEffect, useReducer, useState } from "react";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 export const blogStore = createContext({
     postList: [],
@@ -34,6 +35,7 @@ export const blogStore = createContext({
     const [getNewPosts, setNewPosts] = useState("");
     const [getEditPosts, setEditPosts] = useState("");
     const [getEditId, setEditId] = useState("");
+    const navigate = useNavigate();
   
     useEffect(() => {
       let controller = new AbortController();
@@ -72,7 +74,9 @@ export const blogStore = createContext({
             type: "ADD_POSTS",
             payload: {data},
         })
-          sideDisplay("dashboard")
+          sideDisplay("dashboard");
+          navigate("/dashboard")
+
         } catch (error) {
           console.log("Error", error);
         }
