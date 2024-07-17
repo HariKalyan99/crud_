@@ -1,5 +1,5 @@
-import { generateTokenAndCookie } from "../lib/utils/generateTokenAndSetCookie";
-import Auth from "../models/auth.model";
+import { generateTokenAndCookie } from "../lib/utils/generateTokenAndSetCookie.js";
+import Auth from "../models/auth.model.js";
 import bcrypt from 'bcryptjs';
 
 
@@ -45,7 +45,7 @@ export const postSignUp = async(request, response) => {
         })
 
         if(newUser){
-            generateTokenAndCookie(newUser._id, response);
+            // generateTokenAndCookie(newUser._id, response);
 
             await newUser.save();
 
@@ -66,3 +66,29 @@ export const postSignUp = async(request, response) => {
     }
 }
 
+
+export const postLogin = async(request, response) => {
+    try {   
+        const {username, password} = request.body;
+
+        const user = await Auth.findOne({username});
+        const isPasswordCorrect = await bcrypt.compare(password, user?.password || "");
+
+        if(!user || !isPasswordCorrect) {
+            return response.status(400).json({error: "Invalid username or password"})
+        }
+
+        generateTokenAndCookie(user._id, response);
+
+        return response.status(200).json({
+            _id: user._id,
+            fullname: user.fullname,
+            username: user.username,
+            email: user.email
+        })
+
+    } catch (error) {
+        console.log("Error in the postLogin controller", error.message);
+        return response.status(500).json({error: "Internal server error"})
+    }
+}
