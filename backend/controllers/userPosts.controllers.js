@@ -42,7 +42,14 @@ export const updateBlogPosts = async(request, response) => {
         if(!user){
             return response.status(404).json({error: "User not found"})
         }
-        let post = await PostModel.findOne({_id});
+        let isPostFromSameUser = await PostModel.findOne({user: request.user});
+
+
+
+        if(!isPostFromSameUser){
+            return response.status(400).json({error: "You are not allowed to edit this post"})
+        }
+        let post = await PostModel.findOne({_id,user: request.user});
 
         if(!post){
             return response.status(404).json({error: "Post not found"})
@@ -60,5 +67,33 @@ export const updateBlogPosts = async(request, response) => {
     } catch (error) {
         console.log("Error in the updateBlogPosts controller", error.message);
         return response.status(500).json({error: "Internal server error"})        
+    }
+}
+
+
+export const deleteBlogPosts = async(request, response) => {
+    try {
+        const {id} = request.params;
+
+        const user = await Auth.findById(request.user._id?.toString());
+
+        if(!user){
+            return response.status(404).json({error: "User not found"})
+        }
+        let isDelFromSameUser = await PostModel.findOne({user: request.user});
+
+        if(!isDelFromSameUser){
+            return response.status(400).json({error: "You are not allowed to delete this post"})
+        }
+
+
+        const post = await PostModel.findOneAndDelete({_id: id});
+  
+        return response.status(200).json({message: "Post deleted", post})
+
+    } catch (error) {
+        console.log("Error in deleteBlogPosts controller", error.message);
+
+        return response.status(500).json({error: "Internal server error"})
     }
 }
