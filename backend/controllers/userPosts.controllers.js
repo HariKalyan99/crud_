@@ -89,7 +89,7 @@ export const deleteBlogPosts = async(request, response) => {
 
         const post = await PostModel.findOneAndDelete({_id: id});
   
-        return response.status(200).json({message: "Post deleted", post})
+        return response.status(200).json({message: "Post deleted"})
 
     } catch (error) {
         console.log("Error in deleteBlogPosts controller", error.message);
