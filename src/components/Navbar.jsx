@@ -1,6 +1,8 @@
-import React from 'react'
+import React, { useContext } from 'react'
+import { blogStore } from '../store/Blogstore'
 
 const Navbar = () => {
+  const {authenticate} = useContext(blogStore)
   return (
     <header className="p-3 text-bg-dark">
     <div className="container">
@@ -22,8 +24,8 @@ const Navbar = () => {
         </form>
 
         <div className="text-end">
-          <button type="button" className="btn btn-outline-light me-2">Login</button>
-          <button type="button" className="btn btn-warning">Sign-up</button>
+          <button type="button" className="btn btn-outline-light me-2" onClick={() => authenticate('login')}>Login</button>
+          <button type="button" className="btn btn-warning" onClick={() => authenticate('signup')}>Sign-up</button>
         </div>
       </div>
     </div>

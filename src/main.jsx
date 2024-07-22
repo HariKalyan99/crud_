@@ -6,11 +6,15 @@ import App from './routes/App'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import CreatePost from './components/CreatePost'
 import Dashboard from './components/Dashboard'
+import Signup from './components/Authenticate/Signup'
+import Login from './components/Authenticate/Login'
 
 
 const router = createBrowserRouter([
   {path: "/", element: <App />, children: [
-    {path: "/", element: <CreatePost />},
+    {path: "/", element: <Signup />},
+    {path: "/login", element: <Login />},
+    {path: "/createpost", element: <CreatePost />},
     {path: "/dashboard", element: <Dashboard />},
   ]}
 ])

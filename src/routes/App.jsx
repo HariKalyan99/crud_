@@ -3,15 +3,18 @@ import Navbar from "../components/Navbar";
 import Sidebar from "../components/Sidebar";
 import BlogstoreProvider from "../store/Blogstore";
 import { Outlet } from "react-router-dom";
+import Auth from "../components/Authenticate/Auth";
 
 function App() {
+  const jwt = document.cookie;
+
   return (
     <BlogstoreProvider>
       <Navbar />
-      <div className="d-flex">
+      {jwt?.length ? <div className="d-flex">
         <Sidebar />
         <Outlet />
-      </div>
+      </div> : <Auth />}
       <Footer />
     </BlogstoreProvider>
   );

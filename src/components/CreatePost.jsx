@@ -28,7 +28,8 @@ const tags = tagsRef.current.value.split(",");
     userIdRef.current.value = ""
 titleRef.current.value = ""
 bodyRef.current.value = ""
-reactionsRef.current.value = ""
+likesRef.current.value = ""
+disLikesRef.current.value = ""
 tagsRef.current.value = ""
   }
   if(side === "home"){

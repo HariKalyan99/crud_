@@ -10,7 +10,7 @@ const Sidebar = () => {
     <hr />
     <ul class="nav nav-pills flex-column mb-auto">
       <li class="nav-item" onClick={() => sideDisplay("home")}>
-        <Link to={"/"} class={`nav-link text-white ${side === "home" && 'active'}`} aria-current="page">
+        <Link to={"/createpost"} class={`nav-link text-white ${side === "home" && 'active'}`} aria-current="page">
           <svg class="bi pe-none me-2" width="16" height="16"><use xlinkHref="#home"></use></svg>
           Home
         </Link>

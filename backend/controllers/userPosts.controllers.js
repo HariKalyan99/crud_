@@ -13,6 +13,7 @@ export const getPosts = async(request, response) => {
 
 export const addBlogPosts = async(request, response) => {
     try {
+        console.log(request.body)
         const {title, userId, body, tags, reactions, views} = request.body;
         const user_id = request.user._id?.toString();
 
@@ -86,13 +87,19 @@ export const deleteBlogPosts = async(request, response) => {
         }
         let isDelFromSameUser = await PostModel.findOne({user: request.user});
 
-        if(!isDelFromSameUser){
+        let simple = await PostModel.find({})
+        console.log(simple)
+
+        if(!isDelFromSameUser && simple?.length){
             return response.status(400).json({error: "You are not allowed to delete this post"})
+        }
+        if(!simple?.length){
+            return response.status(400).json({error: "The post is already deleted or might not be there!"})
         }
         
 
 
-        const post = await PostModel.findOneAndDelete({_id: id});
+        await PostModel.findOneAndDelete({_id: id});
   
         return response.status(200).json({message: "Post deleted"})
 

@@ -8,7 +8,9 @@ export const blogStore = createContext({
     deletePost: () => {},
     editPost: () => {},
     sideDisplay: () => {},
-    side: "",
+    authenticate: () => {},
+    getAuthenticate: "",
+    side: ""
   });
 
   function pureReducerFn(currentState, action){
@@ -29,6 +31,7 @@ export const blogStore = createContext({
   
   const BlogstoreProvider = ({children}) => {
     const [side, setSide] = useState("home");
+    const [getAuthenticate, setAuthenticate] = useState("signup");
     // const [postList, setPostList] = useState([]);
   
     const [postList, dispatchPostListFn] = useReducer(pureReducerFn, [])
@@ -42,7 +45,7 @@ export const blogStore = createContext({
       let { signal } = controller;
       let fetchPostList = async () => {
         try {
-          const { data } = await axios.get("http://localhost:8000/posts", {
+          const { data } = await axios.get("http://127.0.0.1:8081/api/posts/allPosts", {
             signal,
           });
         //   setPostList(data);
@@ -65,10 +68,12 @@ export const blogStore = createContext({
     useEffect(() => {
       const postFetchAdd = async (post) => {
         try {
-          const { data } = await axios.post("http://localhost:8000/posts", {
+          console.log(post)
+          const { data } = await axios.post("http://127.0.0.1:8081/api/posts/add", {
             ...post,
           });
-  
+          
+          console.log(data)
         //   setPostList([data, ...postList]);
         dispatchPostListFn({
             type: "ADD_POSTS",
@@ -151,12 +156,12 @@ export const blogStore = createContext({
   
     const addPost = (post) => {
       let newPost = {
-        userId: post.userId,
+        userId: Number(post.userId),
         title: post.title,
         body: post.body,
         reactions: {
-          likes: post.likes,
-          dislikes: post.dislikes,
+          likes: Number(post.likes),
+          dislikes: Number(post.dislikes),
         },
         tags: post.tags,
         views: 100,
@@ -173,8 +178,13 @@ export const blogStore = createContext({
     };
 
 
+    const authenticate = (val) => {
+      setAuthenticate(val)
+    }
+
+
     return (
-      <blogStore.Provider value={{ postList, sideDisplay, addPost, deletePost, editPost, side }}>
+      <blogStore.Provider value={{ postList,authenticate, getAuthenticate,sideDisplay, addPost, deletePost, editPost, side }}>
         {children}
       </blogStore.Provider>
     )
