@@ -78,13 +78,14 @@ export const postLogin = async(request, response) => {
             return response.status(400).json({error: "Invalid username or password"})
         }
 
-        generateTokenAndCookie(user._id, response);
+        const token = generateTokenAndCookie(user._id, response);
 
         return response.status(200).json({
             _id: user._id,
             fullname: user.fullname,
             username: user.username,
-            email: user.email
+            email: user.email,
+            token
         })
 
     } catch (error) {

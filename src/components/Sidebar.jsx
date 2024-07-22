@@ -3,8 +3,10 @@ import { blogStore } from '../store/Blogstore';
 import { Link } from 'react-router-dom';
 
 const Sidebar = () => {
+  
+  const {side, sideDisplay, jwt} = useContext(blogStore);
 
-  const {side, sideDisplay} = useContext(blogStore);
+ if(jwt?.length > 0){
   return (
     <div class="d-flex flex-column flex-shrink-0 p-3 text-bg-dark" style={{"width": "240px"}}>
     <hr />
@@ -26,6 +28,7 @@ const Sidebar = () => {
     
   </div>
   )
+ }
 }
 
 export default Sidebar

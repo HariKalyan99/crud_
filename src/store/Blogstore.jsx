@@ -8,11 +8,11 @@ export const blogStore = createContext({
     deletePost: () => {},
     editPost: () => {},
     sideDisplay: () => {},
-    authenticate: () => {},
-    getAuthenticate: "",
     side: "",
     signUp: () => {},
-    login: () => {}
+    login: () => {},
+    jwt: "",
+    loginLogout: () => {}
   });
 
   function pureReducerFn(currentState, action){
@@ -33,7 +33,6 @@ export const blogStore = createContext({
   
   const BlogstoreProvider = ({children}) => {
     const [side, setSide] = useState("home");
-    const [getAuthenticate, setAuthenticate] = useState("signup");
     // const [postList, setPostList] = useState([]);
   
     const [postList, dispatchPostListFn] = useReducer(pureReducerFn, [])
@@ -42,7 +41,12 @@ export const blogStore = createContext({
     const [getEditId, setEditId] = useState("");
     const [getSignUp, setSignUp] = useState("");
     const [getLogin, setLogin] = useState("");
+    const [jwt, setJwt] = useState("");
+    const [invoke, setInvoke] = useState("")
     const navigate = useNavigate();
+
+
+   
   
     useEffect(() => {
       let controller = new AbortController();
@@ -72,13 +76,13 @@ export const blogStore = createContext({
     useEffect(() => {
       const postFetchAdd = async (post) => {
         try {
-          console.log(post)
+          
           const { data } = await axios.post("http://127.0.0.1:8081/api/posts/add", {
             ...post,
           });
           
           console.log(data)
-        //   setPostList([data, ...postList]);
+        //   setPostList([data, ...postList]); unauthorized token not provided
         dispatchPostListFn({
             type: "ADD_POSTS",
             payload: {data},
@@ -160,7 +164,6 @@ export const blogStore = createContext({
           await axios.post('http://127.0.0.1:8081/api/auth/signup', {
             ...user
           })
-          authenticate("login")
           navigate("/login");
         } catch (error) {
           console.log("Error in addUser useEffect", error)
@@ -171,6 +174,38 @@ export const blogStore = createContext({
         addUser(getSignUp)
       }
     }, [getSignUp])
+
+    useEffect(() => {
+      const postLogin = async(user) => {
+        try {
+          const {data} = await axios.post('http://127.0.0.1:8081/api/auth/login', {
+            ...user
+          })
+          localStorage.setItem('token', JSON.stringify(data.token))
+          loginLogout("login")        
+        } catch (error) {
+          console.log("Error in addUser useEffect", error)
+        }
+      }
+
+      if(getLogin.username?.length){
+        postLogin(getLogin)
+      }
+    }, [getLogin])
+
+    useEffect(() => {
+      if(invoke == "login"){
+        
+        setJwt(localStorage.getItem('token'));
+        navigate("/createpost")  
+      }else{
+        localStorage.clear();
+        setJwt("")
+        navigate("/")
+      }
+    }, [invoke])
+
+
   
     const sideDisplay = (val) => {
       setSide(val);
@@ -200,9 +235,6 @@ export const blogStore = createContext({
     };
 
 
-    const authenticate = (val) => {
-      setAuthenticate(val)
-    }
 
 
     const signUp = (user) => {
@@ -212,10 +244,12 @@ export const blogStore = createContext({
     const login = (user) => {
       setLogin(user)
     }
-
+    const loginLogout = (val) => {
+      setInvoke(val)
+    }
 
     return (
-      <blogStore.Provider value={{ postList,authenticate, getAuthenticate,sideDisplay, addPost, deletePost, editPost, side, signUp,login }}>
+      <blogStore.Provider value={{ postList,sideDisplay, addPost, deletePost, editPost, side, signUp,login, loginLogout, jwt }}>
         {children}
       </blogStore.Provider>
     )

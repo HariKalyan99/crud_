@@ -1,11 +1,11 @@
 import dotenv from 'dotenv';
-import cors from 'cors'
 dotenv.config();
 import express from 'express';
 import connectToMongo from './db/connectToMongo.js';
 import postsRouter from './routes/posts.routes.js';
 import cookieParser from 'cookie-parser';
 import authRoutes from './routes/auth.routes.js';
+import cors from 'cors'
 
 const PORT = 8081;
 

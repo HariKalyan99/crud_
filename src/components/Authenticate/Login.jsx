@@ -1,10 +1,16 @@
-import React, { useRef } from 'react'
+import React, { useContext, useRef } from 'react'
+import { blogStore } from '../../store/Blogstore'
 
 const Login = () => {
+    const {login} = useContext(blogStore)
     const refUsername = useRef("")
     const refPassword = useRef("")
     const handleSubmit = (e) => {
         e.preventDefault();
+        login({
+            username: refUsername.current.value,
+            password: refPassword.current.value
+        })
     }
   return (
     <div className='h-100 w-100 d-flex justify-content-center'>
@@ -15,6 +21,7 @@ const Login = () => {
             <label id='password'><span className='fw-bold fs-2'>Password</span></label>
             <input type="text" placeholder='password' ref={refPassword} required/>
 
+            <button type='submit' className='btn btn-success'>Login</button>
         </form>
     </div>
   )

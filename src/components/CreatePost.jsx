@@ -3,7 +3,7 @@ import { blogStore } from '../store/Blogstore';
 
 const CreatePost = () => {
 
-  const {addPost, side} = useContext(blogStore)
+  const {addPost, side, jwt} = useContext(blogStore)
 
   const userIdRef = useRef("");
   const titleRef = useRef("");
@@ -32,7 +32,7 @@ likesRef.current.value = ""
 disLikesRef.current.value = ""
 tagsRef.current.value = ""
   }
-  if(side === "home"){
+  if(side === "home" && jwt?.length > 0){
     return (
       <form className='d-flex flex-column justify-content-center align-items-center gap-3 w-100 m-5' onSubmit={(e) => handleSubmit(e)}>
           <label id='userId'>User Id</label>

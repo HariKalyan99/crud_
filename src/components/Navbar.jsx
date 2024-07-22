@@ -1,8 +1,15 @@
 import React, { useContext } from 'react'
 import { blogStore } from '../store/Blogstore'
+import { Link, useNavigate } from 'react-router-dom';
 
 const Navbar = () => {
-  const {authenticate} = useContext(blogStore)
+  const {jwt, loginLogout} = useContext(blogStore);
+  const navigate = useNavigate();
+
+  const logout = () => {
+    loginLogout("logout")
+    navigate("/")
+  }
   return (
     <header className="p-3 text-bg-dark">
     <div className="container">
@@ -24,8 +31,13 @@ const Navbar = () => {
         </form>
 
         <div className="text-end">
-          <button type="button" className="btn btn-outline-light me-2" onClick={() => authenticate('login')}>Login</button>
-          <button type="button" className="btn btn-warning" onClick={() => authenticate('signup')}>Sign-up</button>
+          {!jwt?.length > 0 && <Link to={"/login"}>
+          <button type="button" className="btn btn-outline-light me-2" >Login</button>
+          </Link>}
+          {!jwt?.length > 0 && <Link to={"/"}>
+          <button type="button" className="btn btn-warning" >Sign-up</button>
+          </Link>}
+          {jwt?.length > 0 && <button type='button' className='btn btn-secondary' onClick={logout}>Logout</button>}
         </div>
       </div>
     </div>

@@ -6,16 +6,15 @@ import { Outlet } from "react-router-dom";
 import Auth from "../components/Authenticate/Auth";
 
 function App() {
-  const jwt = document.cookie;
-  
+
 
   return (
     <BlogstoreProvider>
       <Navbar />
-      {jwt?.length ? <div className="d-flex">
+      <div className="d-flex">
         <Sidebar />
         <Outlet />
-      </div> : <Auth />}
+      </div> :
       <Footer />
     </BlogstoreProvider>
   );
