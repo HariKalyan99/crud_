@@ -46,9 +46,13 @@ export const updateBlogPosts = async(request, response) => {
 
 
 
-        if(!isPostFromSameUser){
+        let simple = await PostModel.find({})
+
+        if(!isPostFromSameUser && simple?.length){
             return response.status(400).json({error: "You are not allowed to edit this post"})
         }
+
+
         let post = await PostModel.findOne({_id,user: request.user});
 
         if(!post){
@@ -85,6 +89,7 @@ export const deleteBlogPosts = async(request, response) => {
         if(!isDelFromSameUser){
             return response.status(400).json({error: "You are not allowed to delete this post"})
         }
+        
 
 
         const post = await PostModel.findOneAndDelete({_id: id});
