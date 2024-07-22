@@ -10,7 +10,9 @@ export const blogStore = createContext({
     sideDisplay: () => {},
     authenticate: () => {},
     getAuthenticate: "",
-    side: ""
+    side: "",
+    signUp: () => {},
+    login: () => {}
   });
 
   function pureReducerFn(currentState, action){
@@ -38,6 +40,8 @@ export const blogStore = createContext({
     const [getNewPosts, setNewPosts] = useState("");
     const [getEditPosts, setEditPosts] = useState("");
     const [getEditId, setEditId] = useState("");
+    const [getSignUp, setSignUp] = useState("");
+    const [getLogin, setLogin] = useState("");
     const navigate = useNavigate();
   
     useEffect(() => {
@@ -149,6 +153,24 @@ export const blogStore = createContext({
         delFetchRemove(getEditId);
       }
     }, [getEditId]);
+
+    useEffect(() => {
+      const addUser = async(user) => {
+        try {
+          await axios.post('http://127.0.0.1:8081/api/auth/signup', {
+            ...user
+          })
+          authenticate("login")
+          navigate("/login");
+        } catch (error) {
+          console.log("Error in addUser useEffect", error)
+        }
+      }
+
+      if(getSignUp.fullname?.length){
+        addUser(getSignUp)
+      }
+    }, [getSignUp])
   
     const sideDisplay = (val) => {
       setSide(val);
@@ -183,8 +205,17 @@ export const blogStore = createContext({
     }
 
 
+    const signUp = (user) => {
+      setSignUp(user);
+    }
+
+    const login = (user) => {
+      setLogin(user)
+    }
+
+
     return (
-      <blogStore.Provider value={{ postList,authenticate, getAuthenticate,sideDisplay, addPost, deletePost, editPost, side }}>
+      <blogStore.Provider value={{ postList,authenticate, getAuthenticate,sideDisplay, addPost, deletePost, editPost, side, signUp,login }}>
         {children}
       </blogStore.Provider>
     )

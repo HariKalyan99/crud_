@@ -7,6 +7,7 @@ import Auth from "../components/Authenticate/Auth";
 
 function App() {
   const jwt = document.cookie;
+  
 
   return (
     <BlogstoreProvider>
