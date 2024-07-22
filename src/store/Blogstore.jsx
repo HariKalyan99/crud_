@@ -161,7 +161,7 @@ export const blogStore = createContext({
     useEffect(() => {
       const addUser = async(user) => {
         try {
-          await axios.post('http://127.0.0.1:8081/api/auth/signup', {
+          await axios.post('http://localhost:8081/api/auth/signup', {
             ...user
           })
           navigate("/login");
@@ -178,7 +178,7 @@ export const blogStore = createContext({
     useEffect(() => {
       const postLogin = async(user) => {
         try {
-          const {data} = await axios.post('http://127.0.0.1:8081/api/auth/login', {
+          const {data} = await axios.post('http://localhost:8081/api/auth/login', {
             ...user
           })
           localStorage.setItem('token', JSON.stringify(data.token))
