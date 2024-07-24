@@ -53,7 +53,7 @@ export const blogStore = createContext({
       let { signal } = controller;
       let fetchPostList = async () => {
         try {
-          const { data } = await axios.get("http://127.0.0.1:8081/api/posts/allPosts", {
+          const { data } = await axios.get("http://localhost:8081/api/posts/allPosts", {
             signal,
           });
         //   setPostList(data);
@@ -77,7 +77,7 @@ export const blogStore = createContext({
       const postFetchAdd = async (post) => {
         try {
           
-          const { data } = await axios.post("http://127.0.0.1:8081/api/posts/add", {
+          const { data } = await axios.post("http://localhost:8081/api/posts/add", {
             ...post,
           });
           
@@ -111,7 +111,7 @@ export const blogStore = createContext({
       }) => {
         try {
           const { data } = await axios.put(
-            `http://localhost:8000/posts/${prevId}`,
+            `http://localhost:8081/posts/${prevId}`,
             {
               userId,
               title,
@@ -141,7 +141,7 @@ export const blogStore = createContext({
       const delFetchRemove = async (id) => {
         try {
           const { data } = await axios.delete(
-            `http://localhost:8000/posts/${id}`
+            `http://localhost:8081/posts/${id}`
           );
         //   setPostList(postList.filter(x => x.id?.toString() !== id?.toString()))
         dispatchPostListFn({

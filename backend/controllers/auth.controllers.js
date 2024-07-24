@@ -45,7 +45,8 @@ export const postSignUp = async(request, response) => {
         })
 
         if(newUser){
-            // generateTokenAndCookie(newUser._id, response);
+            generateTokenAndCookie(newUser._id, response);
+            console.log(newUser, newUser._id);
 
             await newUser.save();
 
@@ -78,6 +79,7 @@ export const postLogin = async(request, response) => {
             return response.status(400).json({error: "Invalid username or password"})
         }
 
+        console.log(user, user._id)
         const token = generateTokenAndCookie(user._id, response);
 
         return response.status(200).json({
