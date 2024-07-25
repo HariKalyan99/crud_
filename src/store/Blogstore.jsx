@@ -161,9 +161,14 @@ export const blogStore = createContext({
     useEffect(() => {
       const addUser = async(user) => {
         try {
-          await axios.post('http://localhost:8081/api/auth/signup', {
-            ...user
+          const res = await fetch('http://localhost:8081/api/auth/signup', {
+            method: "POST",
+            body: JSON.stringify({...user}),
+            headers: {
+              'Content-Type': 'application/json'
+            }            
           })
+          const data = res.json().then(console.log);
           navigate("/login");
         } catch (error) {
           console.log("Error in addUser useEffect", error)
@@ -178,9 +183,14 @@ export const blogStore = createContext({
     useEffect(() => {
       const postLogin = async(user) => {
         try {
-          const {data} = await axios.post('http://localhost:8081/api/auth/login', {
-            ...user
+          const res = await fetch('http://localhost:8081/api/auth/login', {
+            method: "POST",
+            body: JSON.stringify({...user}),
+            headers: {
+              'Content-Type': 'application/json'
+            }            
           })
+          const data = res.json().then(console.log);
           localStorage.setItem('token', JSON.stringify(data.token))
           loginLogout("login")        
         } catch (error) {
